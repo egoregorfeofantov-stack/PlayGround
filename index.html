@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="theme-color" content="#18251e">
+<title>Moonroot — Farm by day. Defend by night.</title>
+<style>
+:root{--ink:#f7f2df;--muted:#a9b5a2;--panel:#202e27;--line:#405344;--gold:#ffd277;--green:#a8db8c;--coral:#ff9878}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#131d18;color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif}body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);overscroll-behavior:none}.app{max-width:1180px;margin:auto;padding:14px 18px 22px}.top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:12px}.brand{display:flex;align-items:center;gap:11px}.logo{width:44px;height:44px;border-radius:15px;background:linear-gradient(145deg,#b4df85,#54855b);display:grid;place-items:center;font-size:26px;box-shadow:0 6px 20px #0005}.title{font-weight:900;letter-spacing:.04em;font-size:19px}.subtitle{font-size:11px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;margin-top:3px}.hud{display:flex;gap:8px;align-items:center}.pill{border:1px solid var(--line);background:#202d26;border-radius:13px;padding:8px 12px;min-width:72px;text-align:center;font-size:13px;font-weight:800}.pill small{color:var(--muted);font-weight:600;margin-right:4px}.daypill{color:var(--gold)}.layout{display:grid;grid-template-columns:minmax(0,1fr) 286px;gap:14px;align-items:stretch}.scene{position:relative;min-width:0;overflow:hidden;border:1px solid #536a4f;border-radius:22px;background:#263a2d;box-shadow:0 16px 45px #0005;min-height:510px}.scene canvas{display:block;width:100%;height:100%;min-height:510px;touch-action:none}.scene-tag{position:absolute;top:14px;left:15px;padding:8px 12px;border:1px solid #ffffff27;border-radius:12px;background:#18251ecc;backdrop-filter:blur(8px);font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:800;pointer-events:none}.weather{position:absolute;top:14px;right:14px;color:#ffdf91;background:#17231bc9;padding:8px 11px;border-radius:12px;font-size:12px;font-weight:700;pointer-events:none}.side{display:flex;flex-direction:column;gap:12px}.card{background:linear-gradient(145deg,#24332b,#1c2922);border:1px solid var(--line);border-radius:18px;padding:15px}.phase{font-size:10px;text-transform:uppercase;letter-spacing:.16em;color:var(--green);font-weight:900}.card h1{font-size:20px;line-height:1.15;margin:7px 0 6px}.desc{font-size:12px;line-height:1.5;color:#bac6b6;margin:0}.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:13px}.tool,.action{border:1px solid #50624f;background:#29382e;color:var(--ink);border-radius:12px;padding:10px 7px;font:700 12px inherit;cursor:pointer;transition:.16s}.tool span{display:block;font-size:19px;margin-bottom:3px}.tool.active{border-color:var(--gold);background:#51432a;color:#ffe4a0;box-shadow:0 0 0 1px #ffd27738}.tool:hover,.action:hover{filter:brightness(1.13);transform:translateY(-1px)}.inventory{display:flex;justify-content:space-between;align-items:center;margin-top:11px;padding-top:10px;border-top:1px solid #3b4a3e;color:#b8c2b5;font-size:12px}.inventory strong{color:var(--ink)}.action{width:100%;padding:13px 10px;font-size:14px;background:linear-gradient(135deg,#a5d27b,#72a566);color:#152219;border:0;border-radius:13px;font-weight:900;margin-top:11px;box-shadow:0 6px 15px #8fc66b25}.action.night{background:linear-gradient(135deg,#ffcb79,#e99558);color:#2d1d13}.action.secondary{background:#304237;color:var(--ink);border:1px solid var(--line);box-shadow:none}.hint{font-size:11px;line-height:1.45;color:#9eae9d;margin-top:9px}.objective{display:flex;gap:8px;align-items:center;margin-top:11px;font-size:12px;color:#d9e3d3}.hp{display:flex;gap:4px}.hp i{display:block;width:12px;height:12px;background:#ff8c70;border-radius:4px;box-shadow:0 0 8px #f86a5266}.hp i.off{background:#48564c;box-shadow:none}.toast{position:absolute;bottom:15px;left:50%;transform:translate(-50%,12px);padding:10px 15px;border-radius:12px;background:#17231be8;border:1px solid #ffffff27;font-size:13px;font-weight:700;opacity:0;pointer-events:none;transition:.22s;white-space:nowrap}.toast.show{opacity:1;transform:translate(-50%,0)}.wavebar{height:6px;border-radius:8px;background:#3a493e;overflow:hidden;margin-top:10px}.wavebar i{display:block;height:100%;width:0;background:#f4ae6e;transition:width .2s}.side-footer{margin-top:auto;color:#829184;font-size:10px;text-align:center;line-height:1.5;padding:0 8px}.mobile-tip{display:none}
+@media(max-width:820px){.app{padding:10px 11px 18px}.layout{grid-template-columns:1fr;gap:10px}.top{margin-bottom:9px}.scene{min-height:0;height:min(54vh,510px);border-radius:18px}.scene canvas{min-height:0;height:100%}.side{display:grid;grid-template-columns:1fr 1fr;gap:9px}.card{padding:12px}.card.main{grid-column:1/-1}.tools{margin-top:9px}.hint{margin-top:7px}.side-footer{grid-column:1/-1}.title{font-size:17px}.logo{width:38px;height:38px;font-size:22px}.pill{padding:7px 9px;min-width:58px;font-size:12px}.subtitle{font-size:9px}}
+@media(max-width:480px){.app{padding:8px 9px 14px}.top{align-items:flex-start}.hud{gap:5px}.pill{min-width:0;padding:7px 8px;font-size:11px;border-radius:11px}.pill small{font-size:10px}.brand{gap:8px}.scene{height:43vh;min-height:280px;max-height:390px}.side{grid-template-columns:1fr}.card.main{grid-column:auto}.side-footer{display:none}.scene-tag,.weather{top:9px;padding:7px 9px;font-size:9px}.tools{grid-template-columns:repeat(3,1fr)}.mobile-tip{display:block;color:#9dab9b;text-align:center;font-size:10px;margin-top:3px}}
+</style>
+</head>
+<body><main class="app">
+<header class="top"><div class="brand"><div class="logo">🌱</div><div><div class="title">MOONROOT</div><div class="subtitle">Farm by day · Defend by night</div></div></div><div class="hud"><div class="pill daypill"><small>DAY</small><span id="dayNum">1</span></div><div class="pill"><small>🪙</small><span id="coins">12</span></div><div class="pill"><small>🌱</small><span id="seeds">6</span></div></div></header>
+<div class="layout"><section class="scene"><canvas id="game" aria-label="Interactive Moonroot farm and night defense"></canvas><div class="scene-tag" id="sceneTag">☀️ Daytime · Moonroot Farm</div><div class="weather" id="weather">☀️ Clear skies</div><div class="toast" id="toast"></div></section>
+<aside class="side"><section class="card main"><div class="phase" id="phase">Morning · Day 1</div><h1 id="headline">A little patch of hope.</h1><p class="desc" id="description">Plant moonbeans, water your crops, and gather a harvest before the shadows arrive.</p><div class="tools" id="tools"><button class="tool active" data-tool="plant"><span>🌰</span>Plant</button><button class="tool" data-tool="water"><span>💧</span>Water</button><button class="tool" data-tool="harvest"><span>🧺</span>Harvest</button></div><div class="inventory"><span>Today's harvest</span><strong id="harvestCount">0 moonbeans</strong></div><button id="primary" class="action">🌱&nbsp; Plant selected seed</button><div class="hint" id="hint">Tap an empty garden bed to plant. Water it to help it grow overnight.</div></section>
+<section class="card"><div class="phase">Homestead</div><div class="objective"><span>🏡</span><span>Lantern health</span><span class="hp" id="hp"></span></div><div class="objective"><span>🛡️</span><span id="waveText">Night watch: ready</span></div><div class="wavebar"><i id="waveProgress"></i></div><button class="action secondary" id="secondary" style="display:none">Continue to next day</button></section><div class="mobile-tip">Touch a plot to work · Pinch-free, built for cozy thumbs</div><div class="side-footer">A tiny valley at the edge of the wilds. Keep the lantern burning.</div></aside></div></main>
+<script>
+(() => {
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const ui = {
+    day: document.getElementById('dayNum'),
+    coins: document.getElementById('coins'),
+    seeds: document.getElementById('seeds'),
+    phase: document.getElementById('phase'),
+    headline: document.getElementById('headline'),
+    description: document.getElementById('description'),
+    tag: document.getElementById('sceneTag'),
+    weather: document.getElementById('weather'),
+    tools: document.getElementById('tools'),
+    primary: document.getElementById('primary'),
+    hint: document.getElementById('hint'),
+    harvest: document.getElementById('harvestCount'),
+    hp: document.getElementById('hp'),
+    wave: document.getElementById('waveText'),
+    progress: document.getElementById('waveProgress'),
+    secondary: document.getElementById('secondary'),
+    toast: document.getElementById('toast')
+  };
+
+  const COLS = 6;
+  const ROWS = 5;
+  const path = [[-1,2],[0,2],[1,2],[2,2],[3,2],[4,2],[5,2],[6,2],[6,3],[6,4],[5,4],[4,4],[3,4],[2,4],[1,4],[0,4],[-1,4]];
+  const plots = Array.from({ length: ROWS }, () => Array.from({ length: COLS }, () => ({ crop: 0, water: false })));
+  const towers = [];
+  const enemies = [];
+  const shots = [];
+  const particles = [];
+
+  let mode = 'day';
+  let tool = 'plant';
+  let day = 1;
+  let coins = 12;
+  let seeds = 6;
+  let health = 5;
+  let harvested = 0;
+  let wave = 1;
+  let activeWave = false;
+  let selected = null;
+  let frame = 0;
+  let lastTs = 0;
+  let toastTimer = 0;
+  let spawnTimer = 0;
+  let spawned = 0;
+  let totalWave = 0;
+
+  let dims = { w: 800, h: 540, dpr: 1, tw: 78, th: 39, ox: 400, oy: 220 };
+
+  function resize() {
+    const r = canvas.getBoundingClientRect();
+    const d = Math.min(window.devicePixelRatio || 1, 2);
+    dims.w = r.width;
+    dims.h = r.height;
+    dims.dpr = d;
+    canvas.width = Math.round(r.width * d);
+    canvas.height = Math.round(r.height * d);
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    dims.tw = Math.min(r.width / (COLS + 2) * 1.12, r.height / (ROWS + 2) * 1.55, 86);
+    dims.th = dims.tw * 0.52;
+    dims.ox = r.width / 2;
+    dims.oy = Math.max(108, r.height * 0.37);
+    draw();
+  }
+
+  function iso(x, y, z = 0) {
+    return { x: dims.ox + (x - y) * dims.tw * 0.5, y: dims.oy + (x + y) * dims.th * 0.5 - z };
+  }
+
+  function tile(x, y) {
+    return iso(x - (COLS - 1) / 2, y - (ROWS - 1) / 2);
+  }
+
+  function poly(points, fill, stroke = null) {
+    ctx.beginPath();
+    points.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y));
+    ctx.closePath();
+    ctx.fillStyle = fill;
+    ctx.fill();
+    if (stroke) {
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+  }
+
+  function ellipse(x, y, rx, ry, fill) {
+    ctx.beginPath();
+    ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+    ctx.fillStyle = fill;
+    ctx.fill();
+  }
+
+  function rounded(x, y, w, h, r, fill) {
+    ctx.beginPath();
+    ctx.roundRect(x, y, w, h, r);
+    ctx.fillStyle = fill;
+    ctx.fill();
+  }
+
+  function enemyPoint(e) {
+    const idx = Math.min(Math.floor(e.progress), path.length - 2);
+    const t = e.progress - idx;
+    const [ax, ay] = path[idx];
+    const [bx, by] = path[idx + 1];
+    const a = iso(ax - (COLS - 1) / 2, ay - (ROWS - 1) / 2);
+    const b = iso(bx - (COLS - 1) / 2, by - (ROWS - 1) / 2);
+    return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t - 3 };
+  }
+
+  function setToast(text) {
+    ui.toast.textContent = text;
+    ui.toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => ui.toast.classList.remove('show'), 1700);
+  }
+
+  function refresh() {
+    ui.day.textContent = day;
+    ui.coins.textContent = coins;
+    ui.seeds.textContent = seeds;
+    ui.harvest.textContent = `${harvested} moonbean${harvested === 1 ? '' : 's'}`;
+    ui.hp.innerHTML = Array.from({ length: 5 }, (_, i) => `<i class="${i >= health ? 'off' : ''}"></i>`).join('');
+    document.querySelectorAll('.tool').forEach((b) => b.classList.toggle('active', b.dataset.tool === tool));
+
+    if (mode === 'day') {
+      ui.phase.textContent = `Morning · Day ${day}`;
+      ui.headline.textContent = day === 1 ? 'A little patch of hope.' : 'The valley wakes again.';
+      ui.description.textContent = 'Plant moonbeans, water your crops, and gather a harvest before the shadows arrive.';
+      ui.tag.textContent = '☀️ Daytime · Moonroot Farm';
+      ui.weather.textContent = day % 3 === 0 ? '🌦️ A soft drizzle' : '☀️ Clear skies';
+      ui.tools.style.display = 'grid';
+      ui.primary.className = 'action';
+      ui.primary.disabled = false;
+      ui.primary.textContent = '🌙  Send the sun down';
+      ui.hint.textContent = 'Tap an empty bed to plant. Water crops, then harvest ripe moonbeans for coins.';
+      ui.wave.textContent = 'Night watch: ready';
+      ui.secondary.style.display = 'none';
+      ui.progress.style.width = '0%';
+    } else if (mode === 'night') {
+      ui.phase.textContent = activeWave ? `Night watch · Wave ${wave}` : 'Dusk · Build your defenses';
+      ui.headline.textContent = activeWave ? 'Hold the lantern line!' : 'The wilds are stirring.';
+      ui.description.textContent = activeWave ? 'Your watchtowers fire on their own. Place more towers to protect the homestead.' : 'Place watchtowers beside the stone trail, then start the night watch.';
+      ui.tag.textContent = '🌙 Nightfall · 3D Watch';
+      ui.weather.textContent = '✨ The wilds are awake';
+      ui.tools.style.display = 'none';
+      ui.primary.className = 'action night';
+      ui.primary.disabled = activeWave;
+      ui.primary.textContent = activeWave ? '🛡️  Watch in progress' : '⚔️  Start night watch';
+      ui.hint.textContent = 'Tap a clear bed to build a watchtower · 8 coins. Towers auto-fire in range.';
+      ui.wave.textContent = activeWave ? `Wave ${wave} · ${enemies.length} nearby` : 'Build towers · 8 coins each';
+      ui.secondary.style.display = 'none';
+      ui.progress.style.width = activeWave ? `${Math.min(100, (spawned / totalWave) * 100)}%` : '0%';
+    } else if (mode === 'win') {
+      ui.phase.textContent = 'Lantern keeper · Valley safe';
+      ui.headline.textContent = 'A brave little valley.';
+      ui.description.textContent = 'You held the line through five nights. Your garden will always have a home here.';
+      ui.tag.textContent = '🌅 Valley protected';
+      ui.weather.textContent = '✨ Clear skies';
+      ui.tools.style.display = 'none';
+      ui.primary.className = 'action';
+      ui.primary.disabled = false;
+      ui.primary.textContent = '↻  Start a new valley';
+      ui.hint.textContent = '';
+      ui.secondary.style.display = 'none';
+      ui.progress.style.width = '100%';
+    } else {
+      ui.phase.textContent = 'The lantern has gone dark';
+      ui.headline.textContent = 'The shadows took the farm.';
+      ui.description.textContent = 'Your lantern needs tending. Start a fresh valley and try a different defense.';
+      ui.tag.textContent = '🌑 Night over';
+      ui.weather.textContent = '';
+      ui.tools.style.display = 'none';
+      ui.primary.className = 'action';
+      ui.primary.disabled = false;
+      ui.primary.textContent = '↻  Start a new valley';
+      ui.hint.textContent = '';
+      ui.secondary.style.display = 'none';
+      ui.progress.style.width = '0%';
+    }
+  }
+
+  function reset() {
+    mode = 'day';
+    tool = 'plant';
+    day = 1;
+    coins = 12;
+    seeds = 6;
+    health = 5;
+    harvested = 0;
+    wave = 1;
+    activeWave = false;
+    selected = null;
+    spawnTimer = 0;
+    spawned = 0;
+    totalWave = 0;
+    towers.length = 0;
+    enemies.length = 0;
+    shots.length = 0;
+    particles.length = 0;
+    for (const row of plots) {
+      for (const cell of row) {
+        cell.crop = 0;
+        cell.water = false;
+      }
+    }
+    refresh();
+    draw();
+    setToast('A fresh start in Moonroot Valley.');
+  }
+
+  function startNight() {
+    if (mode !== 'day') return;
+    mode = 'night';
+    activeWave = false;
+    selected = null;
+    refresh();
+    draw();
+    setToast('Dusk falls. Build your watchtowers!');
+  }
+
+  function beginWave() {
+    if (mode !== 'night' || activeWave) return;
+    activeWave = true;
+    spawned = 0;
+    totalWave = 4 + wave;
+    spawnTimer = 0.5;
+    refresh();
+    setToast(`Wave ${wave} is on the trail!`);
+  }
+
+  function harvestPlot(cell) {
+    if (!cell.crop) {
+      setToast('Nothing planted here yet.');
+      return;
+    }
+    if (cell.crop < 2) {
+      setToast('Still growing — water it and wait for dawn.');
+      return;
+    }
+    cell.crop = 0;
+    cell.water = false;
+    harvested += 1;
+    coins += 4;
+    seeds += 1;
+    setToast('Moonbean harvested! +4 coins, +1 seed');
+    refresh();
+  }
+
+  function workPlot(x, y) {
+    const cell = plots[y][x];
+    selected = { x, y };
+
+    if (tool === 'plant') {
+      if (cell.crop) {
+        setToast(cell.crop === 2 ? 'Ready to harvest!' : 'That bed is occupied.');
+        refresh();
+        return;
+      }
+      if (!seeds) {
+        setToast('No seeds left. Harvest moonbeans for more.');
+        refresh();
+        return;
+      }
+      cell.crop = 1;
+      seeds -= 1;
+      setToast('Moonbean seed planted. Give it a drink!');
+    } else if (tool === 'water') {
+      if (!cell.crop) {
+        setToast('Plant a seed here first.');
+        refresh();
+        return;
+      }
+      if (cell.water) {
+        setToast('Already watered today.');
+        refresh();
+        return;
+      }
+      cell.water = true;
+      setToast('A good drink for your moonbean.');
+    } else {
+      harvestPlot(cell);
+      refresh();
+      return;
+    }
+
+    refresh();
+    draw();
+  }
+
+  function isPath(x, y) {
+    return path.some(([px, py]) => px === x && py === y);
+  }
+
+  function placeTower(x, y) {
+    if (isPath(x, y)) {
+      setToast('Keep the stone trail clear.');
+      return;
+    }
+    if (towers.some((t) => t.x === x && t.y === y)) {
+      setToast('A watchtower is already here.');
+      return;
+    }
+    if (coins < 8) {
+      setToast('You need 8 coins for a watchtower.');
+      return;
+    }
+    coins -= 8;
+    towers.push({ x, y, cool: 0.15 });
+    selected = { x, y };
+    refresh();
+    draw();
+    setToast('Watchtower built! It will fire at nearby shadows.');
+  }
+
+  function hit(e) {
+    const r = canvas.getBoundingClientRect();
+    const px = e.clientX - r.left;
+    const py = e.clientY - r.top;
+    let best = null;
+    let dist = Infinity;
+
+    for (let y = 0; y < ROWS; y++) {
+      for (let x = 0; x < COLS; x++) {
+        const p = tile(x, y);
+        const d = Math.hypot((px - p.x) / dims.tw, (py - p.y) / dims.th);
+        if (d < dist) {
+          dist = d;
+          best = { x, y };
+        }
+      }
+    }
+
+    if (!best || dist > 0.62) return;
+
+    if (mode === 'day') {
+      workPlot(best.x, best.y);
+    } else if (mode === 'night') {
+      placeTower(best.x, best.y);
+    }
+  }
+
+  function spawnEnemy() {
+    enemies.push({
+      progress: 0,
+      hp: 2 + wave,
+      max: 2 + wave,
+      speed: 1.05 + wave * 0.03
+    });
+  }
+
+  function updateNight(dt) {
+    if (!activeWave) return;
+
+    spawnTimer -= dt;
+    if (spawnTimer <= 0 && spawned < totalWave) {
+      spawnEnemy();
+      spawned += 1;
+      spawnTimer = Math.max(0.55, 1.25 - wave * 0.08);
+    }
+
+    for (const enemy of enemies) {
+      enemy.progress += dt * enemy.speed;
+      const point = enemyPoint(enemy);
+      if (enemy.progress >= path.length - 1) {
+        health -= 1;
+        setToast('The lantern flickers!');
+        enemy.dead = true;
+      }
+    }
+
+    for (let i = enemies.length - 1; i >= 0; i--) {
+      const e = enemies[i];
+      if (e.dead) {
+        enemies.splice(i, 1);
+      }
+    }
+
+    if (health <= 0) {
+      mode = 'lose';
+      activeWave = false;
+      refresh();
+      setToast('The Lantern is gone.');
+      return;
+    }
+
+    for (const tower of towers) {
+      tower.cool = Math.max(0, tower.cool - dt);
+      if (tower.cool > 0) continue;
+
+      let target = null;
+      let best = Infinity;
+      for (const enemy of enemies) {
+        const p = enemyPoint(enemy);
+        const tx = tile(tower.x, tower.y).x;
+        const ty = tile(tower.x, tower.y).y;
+        const d = Math.hypot(p.x - tx, p.y - ty);
+        if (d < 110 && d < best) {
+          best = d;
+          target = enemy;
+        }
+      }
+
+      if (!target) continue;
+
+      const towerPos = tile(tower.x, tower.y);
+      const targetPos = enemyPoint(target);
+      shots.push({ x: towerPos.x, y: towerPos.y - 25, tx: targetPos.x, ty: targetPos.y - 14, life: 0.4 });
+      target.hp -= 1;
+      tower.cool = 0.72;
+
+      if (target.hp <= 0) {
+        coins += 2;
+        target.dead = true;
+      }
+    }
+
+    for (let i = shots.length - 1; i >= 0; i--) {
+      const s = shots[i];
+      s.life -= dt;
+      if (s.life <= 0) shots.splice(i, 1);
+    }
+
+    for (let i = enemies.length - 1; i >= 0; i--) {
+      if (enemies[i].dead) enemies.splice(i, 1);
+    }
+
+    if (spawned >= totalWave && enemies.length === 0) {
+      activeWave = false;
+      const bonus = 10 + wave * 2;
+      coins += bonus;
+      wave += 1;
+      day += 1;
+      mode = wave > 5 ? 'win' : 'day';
+      for (const row of plots) {
+        for (const cell of row) {
+          if (cell.crop && cell.water) {
+            cell.crop = Math.min(2, cell.crop + 1);
+            cell.water = false;
+          }
+        }
+      }
+      setToast(`Dawn! +${bonus} coins`);
+      refresh();
+    }
+  }
+
+  function draw() {
+    if (!dims.w) return;
+    frame += 1;
+    const w = dims.w;
+    const h = dims.h;
+    ctx.clearRect(0, 0, w, h);
+    ctx.save();
+
+    const night = mode === 'night';
+    const sky = ctx.createLinearGradient(0, 0, 0, h);
+    sky.addColorStop(0, night ? '#111b36' : '#91c7d0');
+    sky.addColorStop(0.58, night ? '#29354b' : '#c7dfb0');
+    sky.addColorStop(1, night ? '#263b34' : '#4c7950');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, w, h);
+
+    if (night) {
+      for (let i = 0; i < 38; i++) {
+        const sx = (i * 173 + 37) % w;
+        const sy = (i * 79 + 23) % (h * 0.42);
+        ctx.globalAlpha = 0.22 + Math.sin(frame * 0.025 + i) * 0.16;
+        ellipse(sx, sy, 1.1, 1.1, '#fff2b7');
+      }
+      ctx.globalAlpha = 1;
+      ellipse(w * 0.83, h * 0.15, 22, 22, '#fff1c6');
+      ellipse(w * 0.83 + 9, h * 0.15 - 5, 20, 20, '#15203c');
+    } else {
+      ellipse(w * 0.84, h * 0.14, 25, 25, '#ffe49a');
+      ellipse(w * 0.84, h * 0.14, 39, 39, '#ffe49a22');
+    }
+
+    ctx.fillStyle = night ? '#24354a' : '#83ae79';
+    ctx.beginPath();
+    ctx.moveTo(0, h * 0.45);
+    for (let x = 0; x <= w; x += w / 6) {
+      ctx.quadraticCurveTo(x + w / 12, h * 0.27 + (x % 2 ? 25 : -12), x + w / 6, h * 0.45);
+    }
+    ctx.lineTo(w, h * 0.65);
+    ctx.lineTo(0, h * 0.65);
+    ctx.fill();
+
+    const halfW = dims.tw * 0.5;
+    const halfH = dims.th * 0.5;
+    const corners = [iso(-0.8, -0.7), iso(COLS - 0.2, -0.7), iso(COLS - 0.2, ROWS - 0.3), iso(-0.8, ROWS - 0.3)];
+    poly(corners, night ? '#314934' : '#56814d', '#9ab97355');
+
+    for (let y = 0; y < ROWS; y++) {
+      for (let x = 0; x < COLS; x++) {
+        const p = tile(x, y);
+        const cell = plots[y][x];
+        const pts = [
+          { x: p.x, y: p.y - halfH },
+          { x: p.x + halfW, y: p.y },
+          { x: p.x, y: p.y + halfH },
+          { x: p.x - halfW, y: p.y }
+        ];
+        const ground = night ? '#594b3d' : ((x + y) % 2 ? '#806344' : '#8c6b49');
+        poly(pts, ground, selected && selected.x === x && selected.y === y ? '#ffe38b' : '#b2946455');
+        poly([{ x: p.x, y: p.y - halfH + 2 }, { x: p.x + halfW - 3, y: p.y + 1 }, { x: p.x, y: p.y + halfH - 2 }, { x: p.x - halfW + 3, y: p.y + 1 }], cell.water ? '#4b493c' : '#72553a');
+
+        if (cell.crop) {
+          const stage = cell.crop;
+          const z = stage === 1 ? 10 : 17;
+          const sway = Math.sin(frame * 0.035 + x * 3 + y) * 1.5;
+          const gy = p.y - 3;
+          ellipse(p.x, gy + 4, 10, 4, '#352a21aa');
+          if (stage === 1) {
+            ctx.strokeStyle = '#9ddb78';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(p.x, gy + 2);
+            ctx.quadraticCurveTo(p.x - 3, gy - z / 2, p.x - 8 + sway, gy - z);
+            ctx.moveTo(p.x, gy + 2);
+            ctx.quadraticCurveTo(p.x + 2, gy - z / 2, p.x + 8 + sway, gy - z);
+            ctx.stroke();
+            ellipse(p.x, gy - z + 2, 3, 2, '#d7f089');
+          } else {
+            ctx.strokeStyle = '#5e983f';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(p.x, gy + 2);
+            ctx.lineTo(p.x + sway, gy - z);
+            ctx.stroke();
+            for (let j = 0; j < 5; j++) {
+              const a = j * Math.PI * 2 / 5;
+              ellipse(p.x + sway + Math.cos(a) * 8, gy - z * 0.65 + Math.sin(a) * 5, 6, 4, j % 2 ? '#83c65e' : '#a1d86d');
+            }
+            ellipse(p.x + sway, gy - z, 6, 6, '#ffd978');
+            ellipse(p.x + sway - 2, gy - z - 2, 2, 2, '#fff0ae');
+          }
+          if (cell.water) ellipse(p.x + 12, p.y + 5, 3, 2, '#84daf0');
+        }
+
+        if (selected && selected.x === x && selected.y === y) {
+          ctx.strokeStyle = '#fff0a6';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y - halfH + 3);
+          ctx.lineTo(p.x + halfW - 4, p.y);
+          ctx.lineTo(p.x, p.y + halfH - 3);
+          ctx.lineTo(p.x - halfW + 4, p.y);
+          ctx.closePath();
+          ctx.stroke();
+        }
+      }
+    }
+
+    if (night) {
+      for (let i = 0; i < path.length; i++) {
+        const [x, y] = path[i];
+        const p = iso(x - (COLS - 1) / 2, y - (ROWS - 1) / 2);
+        const road = [
+          { x: p.x, y: p.y - halfH * 0.72 },
+          { x: p.x + halfW * 0.72, y: p.y },
+          { x: p.x, y: p.y + halfH * 0.72 },
+          { x: p.x - halfW * 0.72, y: p.y }
+        ];
+        poly(road, '#756b69', '#c6b69b77');
+        poly(road.map((v) => ({ x: v.x, y: v.y + 4 })), '#484550');
+      }
+    }
+
+    const house = iso(2.45 - (COLS - 1) / 2, -1.15 - (ROWS - 1) / 2);
+    poly([{ x: house.x - 32, y: house.y + 10 }, { x: house.x, y: house.y - 9 }, { x: house.x + 33, y: house.y + 10 }, { x: house.x + 33, y: house.y + 40 }, { x: house.x - 32, y: house.y + 40 }], night ? '#54465a' : '#d9b879', '#554735');
+    poly([{ x: house.x - 39, y: house.y + 10 }, { x: house.x, y: house.y - 14 }, { x: house.x + 39, y: house.y + 10 }, { x: house.x, y: house.y + 32 }], night ? '#7b5267' : '#9d624c', '#e5c27b');
+    rounded(house.x - 7, house.y + 20, 14, 20, 5, night ? '#ffd880' : '#65442e');
+
+    for (const t of towers) {
+      const p = tile(t.x, t.y);
+      const lift = 25;
+      ellipse(p.x, p.y + 5, 18, 8, '#111a1aaa');
+      poly([{ x: p.x - 12, y: p.y }, { x: p.x - 12, y: p.y - lift }, { x: p.x - 6, y: p.y - lift + 2 }, { x: p.x - 6, y: p.y + 2 }], '#b4834f');
+      poly([{ x: p.x + 7, y: p.y + 2 }, { x: p.x + 7, y: p.y - lift + 2 }, { x: p.x + 12, y: p.y - lift }, { x: p.x + 12, y: p.y }], '#79583e');
+      poly([{ x: p.x - 16, y: p.y - lift }, { x: p.x, y: p.y - lift - 8 }, { x: p.x + 16, y: p.y - lift }, { x: p.x, y: p.y - lift + 9 }], '#e1bd6e', '#fff0ad');
+      ellipse(p.x, p.y - lift, 4, 4, '#a8e8fd');
+    }
+
+    for (const e of enemies) {
+      const p = enemyPoint(e);
+      ellipse(p.x, p.y + 5, 11, 5, '#080d1a99');
+      ellipse(p.x, p.y - 4, 9, 10, '#5b385f');
+      ellipse(p.x, p.y - 12, 7, 7, '#a66a76');
+      ellipse(p.x - 3, p.y - 13, 1.3, 1.5, '#ffec9e');
+      ellipse(p.x + 3, p.y - 13, 1.3, 1.5, '#ffec9e');
+      rounded(p.x - 10, p.y - 27, 20, 3, 2, '#35253b');
+      rounded(p.x - 10, p.y - 27, 20 * Math.max(0, e.hp / e.max), 3, 2, '#ff846f');
+    }
+
+    for (const s of shots) {
+      ctx.strokeStyle = '#c9f4ff';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(s.x, s.y);
+      ctx.lineTo(s.tx, s.ty);
+      ctx.stroke();
+      ellipse(s.tx, s.ty, 3, 3, '#e6ffff');
+    }
+
+    for (const p of particles) {
+      ellipse(p.x, p.y, p.r, p.r, p.c);
+    }
+
+    if (selected && mode === 'night' && selected.x != null) {
+      const p = tile(selected.x, selected.y);
+      ctx.strokeStyle = '#ffd77b';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 16, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    ctx.restore();
+  }
+
+  function logic(ts) {
+    const dt = Math.min(0.033, (ts - (lastTs || ts)) / 1000 || 0.016);
+    lastTs = ts;
+
+    if (mode === 'night') {
+      updateNight(dt);
+    }
+
+    refresh();
+    draw();
+    requestAnimationFrame(logic);
+  }
+
+  document.querySelectorAll('.tool').forEach((b) => {
+    b.addEventListener('click', () => {
+      if (mode !== 'day') return;
+      tool = b.dataset.tool;
+      refresh();
+    });
+  });
+
+  canvas.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    hit(e);
+  });
+
+  ui.primary.addEventListener('click', () => {
+    if (mode === 'day') {
+      startNight();
+    } else if (mode === 'night' && !activeWave) {
+      beginWave();
+    } else if (mode === 'win' || mode === 'lose') {
+      reset();
+    }
+  });
+
+  ui.secondary.addEventListener('click', () => {
+    if (mode === 'day') {
+      startNight();
+    }
+  });
+
+  reset();
+  resize();
+  window.addEventListener('resize', resize);
+  requestAnimationFrame(logic);
+})();
+</script>
+
