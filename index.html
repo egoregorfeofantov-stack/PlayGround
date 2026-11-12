@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#192b3a">
+  <link rel="icon" href="data:,">
+  <title>Чашкоголовый — Дорога чудес</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">☕</span><div><b>ДОРОГА ЧУДЕС</b><small>ПРИКЛЮЧЕНИЕ ЧАШКОГОЛОВОГО</small></div></div>
+      <div class="top-note"><span class="live-dot"></span> ОДИН ИГРОК <i>•</i> 3 ИСПЫТАНИЯ</div>
+      <button id="soundBtn" class="sound-btn" aria-label="Звук">♫ <span>ЗВУК</span></button>
+    </header>
+    <section class="game-frame" aria-label="Игровое поле">
+      <canvas id="game" width="960" height="540" aria-label="Игра Дорога чудес"></canvas>
+      <div class="vignette"></div>
+      <div class="hud">
+        <div class="player-hud"><span class="hud-icon">♥</span><div><small>ЗАПАС СИЛ</small><div class="hearts" id="hearts">♥ ♥ ♥</div></div></div>
+        <div class="stage-hud"><small>ПУТЕШЕСТВИЕ</small><div class="stage-name" id="stageName">ГЛУХОЙ ЛЕС</div><div class="progress"><i id="progress"></i></div></div>
+        <div class="boss-hud"><div class="boss-label"><small>ПРОТИВНИК</small><span id="bossName">БОЛОТНЫЙ БАРОН</span></div><div class="boss-track"><i id="bossBar"></i></div></div>
+      </div>
+      <div id="overlay" class="overlay">
+        <div class="overlay-card">
+          <div class="eyebrow"><span>✦</span> СКАЗКА ОЖИВАЕТ <span>✦</span></div>
+          <h1>ДОРОГА<br><em>ЧУДЕС</em></h1>
+          <p>Чашкоголовый отправляется в путь!<br>Победи чудищ и верни волшебную звезду.</p>
+          <button id="startBtn" class="start-btn">НАЧАТЬ ПРИКЛЮЧЕНИЕ <b>➜</b></button>
+          <div class="control-hint"><span>← →</span> БЕЖАТЬ <span>SPACE</span> ПРЫЖОК <span>X</span> СТРЕЛЯТЬ</div>
+        </div>
+      </div>
+      <div id="toast" class="toast"></div>
+      <div class="mobile-controls" aria-label="Сенсорное управление">
+        <div class="move-controls"><button data-key="left">◀</button><button data-key="right">▶</button></div>
+        <div class="action-controls"><button data-key="jump">⬆</button><button data-key="shoot">✦</button></div>
+      </div>
+    </section>
+    <footer class="bottom-bar"><div><span class="keycap">←</span><span class="keycap">→</span> ДВИЖЕНИЕ <span class="keycap">SPACE</span> ПРЫЖОК <span class="keycap">X</span> ВЫСТРЕЛ</div><div class="footer-right">УКЛОНИСЬ ОТ АТАК И ПОПАДАЙ В ЦЕЛЬ <span>✦</span></div></footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
