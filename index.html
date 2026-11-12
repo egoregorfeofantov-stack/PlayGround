@@ -13,7 +13,10 @@
     <header class="topbar">
       <div class="brand"><span class="brand-mark">☕</span><div><b>ДОРОГА ЧУДЕС</b><small>ПРИКЛЮЧЕНИЕ ЧАШКОГОЛОВОГО</small></div></div>
       <div class="top-note"><span class="live-dot"></span> ОДИН ИГРОК <i>•</i> 3 ИСПЫТАНИЯ</div>
-      <button id="soundBtn" class="sound-btn" aria-label="Звук">♫ <span>ЗВУК</span></button>
+      <div class="header-actions">
+        <button id="fullscreenBtn" class="sound-btn" aria-label="На весь экран">⛶ <span>ЭКРАН</span></button>
+        <button id="soundBtn" class="sound-btn" aria-label="Звук">♫ <span>ЗВУК</span></button>
+      </div>
     </header>
     <section class="game-frame" aria-label="Игровое поле">
       <canvas id="game" width="960" height="540" aria-label="Игра Дорога чудес"></canvas>
@@ -24,18 +27,24 @@
         <div class="boss-hud"><div class="boss-label"><small>ПРОТИВНИК</small><span id="bossName">БОЛОТНЫЙ БАРОН</span></div><div class="boss-track"><i id="bossBar"></i></div></div>
       </div>
       <div id="overlay" class="overlay">
-        <div class="overlay-card">
+        <div class="overlay-card tutorial-card">
           <div class="eyebrow"><span>✦</span> СКАЗКА ОЖИВАЕТ <span>✦</span></div>
           <h1>ДОРОГА<br><em>ЧУДЕС</em></h1>
           <p>Чашкоголовый отправляется в путь!<br>Победи чудищ и верни волшебную звезду.</p>
+          <div class="tutorial-grid">
+            <div class="tutorial-item"><span class="tutorial-icon">← →</span><div><b>ДВИЖЕНИЕ</b><small>Клавиши A / D тоже работают</small></div></div>
+            <div class="tutorial-item"><span class="tutorial-icon">SPACE</span><div><b>ПРЫЖОК</b><small>Уклоняйся от атак противников</small></div></div>
+            <div class="tutorial-item"><span class="tutorial-icon shoot-icon">X</span><div><b>СТРЕЛЬБА</b><small>Зажми, чтобы непрерывно стрелять</small></div></div>
+          </div>
           <button id="startBtn" class="start-btn">НАЧАТЬ ПРИКЛЮЧЕНИЕ <b>➜</b></button>
-          <div class="control-hint"><span>← →</span> БЕЖАТЬ <span>SPACE</span> ПРЫЖОК <span>X</span> СТРЕЛЯТЬ</div>
+          <div class="control-hint">СОВЕТ: ДЕРЖИ ДИСТАНЦИЮ И СЛЕДИ ЗА СВОИМ ЗДОРОВЬЕМ</div>
         </div>
       </div>
+      <div class="film-grain" aria-hidden="true"></div>
       <div id="toast" class="toast"></div>
       <div class="mobile-controls" aria-label="Сенсорное управление">
-        <div class="move-controls"><button data-key="left">◀</button><button data-key="right">▶</button></div>
-        <div class="action-controls"><button data-key="jump">⬆</button><button data-key="shoot">✦</button></div>
+        <div class="move-controls"><button data-key="left" aria-label="Влево"><b>◀</b><small>ВЛЕВО</small></button><button data-key="right" aria-label="Вправо"><b>▶</b><small>ВПРАВО</small></button></div>
+        <div class="action-controls"><button data-key="jump" aria-label="Прыжок"><b>⬆</b><small>ПРЫЖОК</small></button><button data-key="shoot" aria-label="Стрелять"><b>✦</b><small>ОГОНЬ</small></button></div>
       </div>
     </section>
     <footer class="bottom-bar"><div><span class="keycap">←</span><span class="keycap">→</span> ДВИЖЕНИЕ <span class="keycap">SPACE</span> ПРЫЖОК <span class="keycap">X</span> ВЫСТРЕЛ</div><div class="footer-right">УКЛОНИСЬ ОТ АТАК И ПОПАДАЙ В ЦЕЛЬ <span>✦</span></div></footer>
